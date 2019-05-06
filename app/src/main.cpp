@@ -9,6 +9,7 @@
 #include "../../framework/include/location/Locate.h"
 #include "../../framework/include/cnn/ConvertionKernel.h"
 #include "../../framework/include/cnn/Cnn.h"
+#include "../../framework/include/scale/Scale.h"
 #include <vector>
 
 int main(int argc,char *argv[]){
@@ -44,7 +45,6 @@ int main(int argc,char *argv[]){
     denoiseWindow->SetPixelMtrix(denoiseFliter->doFliter());
 
 
-
     lzw::Cut *cut = new lzw::Cut(pixels3);
     cut->doCut();
     std::vector<lzw::Window *> windows;
@@ -59,16 +59,18 @@ int main(int argc,char *argv[]){
     std::cout<<pixels4->getWidth()<<" "<<pixels4->getHeight()<<std::endl;
 
     lzw::cnn::CNN *cnn = new lzw::cnn::CNN();
-    double **mtrix=new double*[pixels4->getHeight()];
-    for(int i=0; i<pixels4->getHeight();i++){
-        mtrix[i] = new double[pixels4->getWidth()];
-        for(int j=0;j<pixels4->getWidth();j++){
-            mtrix[i][j]=pixels4->getPixel()[i][j].getColor()->getR();
-        }
-    }
+    
+    lzw::Window *Window4 = new lzw::Window(pixels4->getWidth(),pixels4->getHeight(),"4");
+    Window4->SetPixelMtrix(pixels4);
 
-    std::vector<double **> picture;
-    picture.push_back(mtrix);
+    lzw::Scale *scale = new lzw::Scale(64,64,pixels4);
+    lzw::PixelMtrix *pixels5 = scale->doScale();
+
+    lzw::Window *Window5 = new lzw::Window(pixels5->getWidth(),pixels5->getHeight(),"4");
+    Window5->SetPixelMtrix(pixels5);
+
+    std::vector<lzw::PixelMtrix *> picture;
+    picture.push_back(pixels4);
 
     lzw::Vector *v = new lzw::Vector(3,3);
     std::vector<lzw::Vector *> vs;
@@ -90,14 +92,17 @@ int main(int argc,char *argv[]){
     //     }
     //     std::cout<<std::endl;
     // }
-    manager->createWindow(defaultWindow);
-    manager->createWindow(locateWindow);
-    //manager->createWindow(GrayWindow);
-    manager->createWindow(BinaryWindow);
-     manager->createWindow(denoiseWindow);
-    for(int i = 0;i<cut->getArray().size();i++){ 
-        manager->createWindow(windows.at(i));
-    }
+    // manager->createWindow(defaultWindow);
+    // manager->createWindow(locateWindow);
+    // //manager->createWindow(GrayWindow);
+    // manager->createWindow(BinaryWindow);
+    //  manager->createWindow(denoiseWindow);
+    // for(int i = 0;i<cut->getArray().size();i++){ 
+    //     manager->createWindow(windows.at(i));
+    // }
+
+    manager->createWindow(Window4);
+    manager->createWindow(Window5);
     manager->renderWindow();
     
     return 0;

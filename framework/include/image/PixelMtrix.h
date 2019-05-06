@@ -16,6 +16,7 @@ namespace lzw{
         public:
             
             PixelMtrix(/* args */);
+            PixelMtrix(int width,int height);
             ~PixelMtrix();
 
             void setWidth(int width){this->width=width;};

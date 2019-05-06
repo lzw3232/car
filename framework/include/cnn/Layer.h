@@ -3,6 +3,7 @@
 
 #include "../../include/cnn/ConvertionKernel.h"
 #include "../../include/cnn/math/Vector.h"
+#include "../../include/image/PixelMtrix.h"
 
 #include <vector>
 
@@ -21,6 +22,7 @@ namespace lzw{
 		public:
             Layer();
 			Layer(int width, int height, int batchSize, std::vector<double **> values, ConvertionKernel *w);
+			Layer(int width, int height, int batchSize, std::vector<PixelMtrix *> values, ConvertionKernel *w);
 
 			virtual void convolution(bool isFirstEpouch,Vector *v, KernelGenerateMode kernelMode) = 0;
 

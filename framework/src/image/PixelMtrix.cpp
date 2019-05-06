@@ -7,6 +7,12 @@ PixelMtrix::PixelMtrix(/* args */)
 {
 }
 
+PixelMtrix::PixelMtrix(int width,int height)
+{
+    this->width = width;
+    this->height = height;
+}
+
 PixelMtrix::~PixelMtrix()
 {
 }

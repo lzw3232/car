@@ -15,6 +15,8 @@ namespace lzw{
 			ConvertionLayer(){};
 
 			ConvertionLayer(int width, int height, int batchSize, std::vector<double **> values, ConvertionKernel *w);
+			
+			ConvertionLayer(int width, int height, int batchSize, std::vector<PixelMtrix *> values, ConvertionKernel *w);
 
 			void convolution(bool isFirstEpouch,Vector *v, KernelGenerateMode kernelMode);
 
