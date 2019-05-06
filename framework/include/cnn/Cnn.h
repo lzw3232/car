@@ -13,8 +13,8 @@ namespace lzw{
 	namespace cnn{
 		class CNN{
 			private:
-				std::vector<ConvertionLayer*> convertionLayers;
-				std::vector<PollingLayer*> pollingLayers;
+				std::vector<ConvertionLayer *> convertionLayers;
+				std::vector<PoollingLayer *> poollingLayers;
 				std::vector<FullyConnectedLayer*> fullyConnectedLayers;
                 ConvertionLayer *layer;
 
@@ -23,6 +23,8 @@ namespace lzw{
                 std::vector<Vector *> wHeightWidthPairs;
 
 				int	sizeOfConvertionLayer;
+
+				int	sizeOfPoollingLayer;
 
 				int	epochNum;
 
@@ -46,7 +48,7 @@ namespace lzw{
 
 				CNN();
 
-				void input(ConvertionLayer *layer, int sizeOfConvertionLayer, int batchSize, int epochNum, KernelGenerateMode kernelMode, std::vector<Vector *> wHeightWidthPairs);
+				void input(ConvertionLayer *layer, int sizeOfConvertionLayer,int sizeOfPoollingLayer, int batchSize, int epochNum, KernelGenerateMode kernelMode, std::vector<Vector *> wHeightWidthPairs);
 
 				void train();
 

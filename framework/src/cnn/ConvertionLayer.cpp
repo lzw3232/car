@@ -71,5 +71,22 @@ void ConvertionLayer::convolution(bool isFirstEpouch,Vector *v, KernelGenerateMo
     int w=this->getHeight()-(int)(2*floor(this->getw()->getHeight()/2));
     int h=this->getWidth()-(int)(2*floor(this->getw()->getWidth()/2));
     this->afterConvertionLayer = new ConvertionLayer(w,h,this->getbatchSize(),values,this->getw());
+    this->afterConvertionLayer->print();
+}
+
+void ConvertionLayer::print(){
+    std::cout<<this->getWidth()<<" "<<this->getHeight()<<std::endl;
+}
+
+PoollingLayer *ConvertionLayer::castToPoollingLayer(){
+    PoollingLayer *p_layer = new PoollingLayer(this->getWidth(),
+                                                this->getHeight(),
+                                                this->getbatchSize(),
+                                                this->getvalues());
+    // p_layer->setvalues = this->getvalues();
+    // p_layer->setWidth = this->getWidth();
+    // p_layer->setHeight = this->getHeight();
+    // p_layer->setbatchSize = this->getbatchSize();
+
 }
 

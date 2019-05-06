@@ -6,6 +6,7 @@ namespace lzw{
 		namespace cnn{
 	typedef enum KernelGenerateMode{
 		RANDOM,
+		MAX_POOLLING
 	} KernelGenerateMode;
 
 	class ConvertionKernel

@@ -2,6 +2,7 @@
 #define __FRAMEWORK_CNN_CONVERTION_LAYER_H__
 
 #include "../../include/cnn/Layer.h"
+#include "../../include/cnn/PoollingLayer.h"
 #include "../../include/cnn/math/Vector.h"
 
 namespace lzw{
@@ -21,6 +22,10 @@ namespace lzw{
 			void convolution(bool isFirstEpouch,Vector *v, KernelGenerateMode kernelMode);
 
             ConvertionLayer *getAfterConvertionLayer(){return this->afterConvertionLayer;};
+
+			PoollingLayer *castToPoollingLayer();
+
+			void print();
 
 			~ConvertionLayer();
 	};

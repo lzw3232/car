@@ -49,36 +49,35 @@ int main(int argc,char *argv[]){
     cut->doCut();
     std::vector<lzw::Window *> windows;
 
+    // for(int i=0;i<cut->getArray().size();i++){
+    //     lzw::PixelMtrix *pixels4 = cut->clip(pixels3,cut->getArray().at(i));
+    //     lzw::Window *cutWindow_piece = new lzw::Window(pixels4->getWidth()+30,pixels4->getHeight(),"切1");
+    //     cutWindow_piece->SetPixelMtrix(pixels4);
+    //     windows.push_back(cutWindow_piece);
+    // }
+
+    std::vector<lzw::PixelMtrix *> picture;
+
     for(int i=0;i<cut->getArray().size();i++){
         lzw::PixelMtrix *pixels4 = cut->clip(pixels3,cut->getArray().at(i));
-        lzw::Window *cutWindow_piece = new lzw::Window(pixels4->getWidth()+30,pixels4->getHeight(),"切1");
-        cutWindow_piece->SetPixelMtrix(pixels4);
-        windows.push_back(cutWindow_piece);
+        lzw::Scale *scale = new lzw::Scale(64,64,pixels4);
+        lzw::PixelMtrix *pixels5 = scale->doScale();    
+        picture.push_back(pixels5);
     }
-    lzw::PixelMtrix *pixels4 = cut->clip(pixels3,cut->getArray().at(2));
-    std::cout<<pixels4->getWidth()<<" "<<pixels4->getHeight()<<std::endl;
 
     lzw::cnn::CNN *cnn = new lzw::cnn::CNN();
     
-    lzw::Window *Window4 = new lzw::Window(pixels4->getWidth(),pixels4->getHeight(),"4");
-    Window4->SetPixelMtrix(pixels4);
-
-    lzw::Scale *scale = new lzw::Scale(64,64,pixels4);
-    lzw::PixelMtrix *pixels5 = scale->doScale();
-
-    lzw::Window *Window5 = new lzw::Window(pixels5->getWidth(),pixels5->getHeight(),"4");
-    Window5->SetPixelMtrix(pixels5);
-
-    std::vector<lzw::PixelMtrix *> picture;
-    picture.push_back(pixels4);
-
-    lzw::Vector *v = new lzw::Vector(3,3);
+    lzw::Vector *v1 = new lzw::Vector(3,3);
     std::vector<lzw::Vector *> vs;
-    vs.push_back(v);
+    vs.push_back(v1);
+    lzw::Vector *v2 = new lzw::Vector(5,5);
+    vs.push_back(v2);
+    lzw::Vector *v3 = new lzw::Vector(3,3);
+    vs.push_back(v3);
 
     lzw::cnn::ConvertionKernel *kernel = new lzw::cnn::ConvertionKernel();
-    lzw::cnn::ConvertionLayer *layer = new lzw::cnn::ConvertionLayer(23,36,1,picture,kernel);
-    cnn->input(layer,1,1,1,lzw::cnn::KernelGenerateMode::RANDOM,vs);
+    lzw::cnn::ConvertionLayer *layer = new lzw::cnn::ConvertionLayer(64,64,picture.size(),picture,kernel);
+    cnn->input(layer,3,1,picture.size(),1,lzw::cnn::KernelGenerateMode::RANDOM,vs);
     cnn->train();
     
 
@@ -101,8 +100,6 @@ int main(int argc,char *argv[]){
     //     manager->createWindow(windows.at(i));
     // }
 
-    manager->createWindow(Window4);
-    manager->createWindow(Window5);
     manager->renderWindow();
     
     return 0;

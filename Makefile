@@ -37,7 +37,7 @@ LIB=-lstdc++ -ljpeg -lSDL2 -lSDL2main `sdl2-config --cflags --libs` -lpthread
 run:clean all
 	$(BUILD_DIR)/app
 
-all: main.o JPGImageLoader.o ImageLoader.o IOManager.o PixelMtrix.o Pixel.o Window.o WindowManager.o BinaryValFliter.o GrayFliter.o DenoiseFliter.o Fliter.o Thread.o Runnable.o Rect.o Cut.o Locate.o Cnn.o Convertion.o ConvertionKernel.o Layer.o ConvertionLayer.o Scale.o
+all: main.o JPGImageLoader.o ImageLoader.o IOManager.o PixelMtrix.o Pixel.o Window.o WindowManager.o BinaryValFliter.o GrayFliter.o DenoiseFliter.o Fliter.o Thread.o Runnable.o Rect.o Cut.o Locate.o Cnn.o Convertion.o ConvertionKernel.o Layer.o ConvertionLayer.o PoollingLayer.o Scale.o
 	$(CXX) -o $(BUILD_DIR)/app \
 	$(OBJ_DIR)/main.o \
 	$(OBJ_DIR)/JPGImageLoader.o \
@@ -61,6 +61,7 @@ all: main.o JPGImageLoader.o ImageLoader.o IOManager.o PixelMtrix.o Pixel.o Wind
 	$(OBJ_DIR)/ConvertionKernel.o \
 	$(OBJ_DIR)/Layer.o \
 	$(OBJ_DIR)/ConvertionLayer.o \
+	$(OBJ_DIR)/PoollingLayer.o \
 	$(OBJ_DIR)/Scale.o \
 	$(LIB)
 
@@ -109,6 +110,8 @@ Layer.o:
 	$(CXX) $(CPP_FLAGS) -o $(OBJ_DIR)/Layer.o -c $(BASE_DIR)/framework/src/cnn/Layer.cpp $(LIB)
 ConvertionLayer.o:
 	$(CXX) $(CPP_FLAGS) -o $(OBJ_DIR)/ConvertionLayer.o -c $(BASE_DIR)/framework/src/cnn/ConvertionLayer.cpp $(LIB)
+PoollingLayer.o:
+	$(CXX) $(CPP_FLAGS) -o $(OBJ_DIR)/PoollingLayer.o -c $(BASE_DIR)/framework/src/cnn/PoollingLayer.cpp $(LIB)
 Scale.o:
 	$(CXX) $(CPP_FLAGS) -o $(OBJ_DIR)/Scale.o -c $(BASE_DIR)/framework/src/scale/Scale.cpp $(LIB)
 

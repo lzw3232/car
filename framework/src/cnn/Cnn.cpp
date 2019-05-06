@@ -12,12 +12,18 @@ CNN::~CNN(){
 
 }
 
-void CNN::input(ConvertionLayer *layer, int	sizeOfConvertionLayer, int batchSize, int epochNum, KernelGenerateMode kernelMode,std::vector<Vector *> wHeightWidthPairs){
+void CNN::input(ConvertionLayer *layer, 
+				int	sizeOfConvertionLayer, 
+				int sizeOfPoollingLayer,
+				int batchSize, 
+				int epochNum, 
+				KernelGenerateMode kernelMode,
+				std::vector<Vector *> wHeightWidthPairs){
 
 
+	this->sizeOfPoollingLayer = sizeOfPoollingLayer;
 	this->sizeOfConvertionLayer = sizeOfConvertionLayer;
 	this->batchSize = batchSize;
-
 	this->epochNum = epochNum;
     this->layer=layer;
     this->kernelMode=kernelMode;
@@ -66,7 +72,13 @@ void CNN::forward(){
 }
 
 void CNN::polling(){
-
+	PoollingLayer *p_layer = this->convertionLayers.at(this->sizeOfConvertionLayer-1)->getAfterConvertionLayer()->castToPoollingLayer();
+	for(int layerNum = 0; layerNum<sizeOfPoollingLayer; layerNum++){
+		this->poollingLayers.push_back(p_layer);
+		//p_layer->convolution(1,this->wHeightWidthPairs.at(layerNum),KernelGenerateMode::MAX_POOLLING);
+        //p_layer = p_layer->getAfterPoollingLayer();
+	}
+	
 }
 
 void CNN::fullConnect(){

@@ -7,13 +7,15 @@ Layer::Layer(){
 
 }
 
-Layer::Layer(int width, int height, int batchSize, std::vector<double **> values, ConvertionKernel *w){
+Layer::Layer(int width, int height, int batchSize, std::vector<double **> values, ConvertionKernel *w):Layer(width,height,batchSize,values){
+    this->w=w;
+}
+
+Layer::Layer(int width, int height, int batchSize, std::vector<double **> values){
     this->width=width;
     this->height=height;
     this->batchSize=batchSize;
     this->values=values;
-    this->w=w;
-
 }
 
 Layer::Layer(int width, int height, int batchSize, std::vector<PixelMtrix *> values, ConvertionKernel *w){

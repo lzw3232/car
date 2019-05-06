@@ -53,9 +53,6 @@ PixelMtrix *Scale::doScale(){
     double scaleW= (double)srcW / this->distW;
     double scaleH= (double)srcH / this->distH;
 
-    std::cout<<63*scaleW<<" "<<63*scaleH<<std::endl;
-    std::cout<<this->pixel->getWidth()<<" "<<this->pixel->getHeight()<<std::endl;
-
     PixelMtrix *pixelmtrix = new PixelMtrix(this->distW,this->distH);
 
     Pixel **pixels = new Pixel*[this->distH];

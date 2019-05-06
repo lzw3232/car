@@ -21,6 +21,7 @@ namespace lzw{
 			ConvertionKernel *w;
 		public:
             Layer();
+			Layer(int width, int height, int batchSize, std::vector<double **> values);
 			Layer(int width, int height, int batchSize, std::vector<double **> values, ConvertionKernel *w);
 			Layer(int width, int height, int batchSize, std::vector<PixelMtrix *> values, ConvertionKernel *w);
 
