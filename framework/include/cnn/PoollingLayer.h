@@ -17,6 +17,7 @@ namespace lzw{
 
 				void convolution(bool isFirstEpouch,Vector *v, KernelGenerateMode kernelMode);
 				PoollingLayer *getAfterPoollingLayer(){return this->afterPoollingLayer;};
+				void print();
 		};
 	};
 };

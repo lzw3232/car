@@ -78,7 +78,7 @@ int main(int argc,char *argv[]){
     lzw::cnn::ConvertionKernel *kernel = new lzw::cnn::ConvertionKernel();
     lzw::cnn::ConvertionLayer *layer = new lzw::cnn::ConvertionLayer(64,64,picture.size(),picture,kernel);
     cnn->input(layer,3,1,picture.size(),1,lzw::cnn::KernelGenerateMode::RANDOM,vs);
-    cnn->train();
+    //cnn->train();
     
 
     lzw::WindowManager *manager=lzw::WindowManager::GetWindowManagerInstance();

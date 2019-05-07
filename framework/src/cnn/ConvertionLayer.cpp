@@ -87,6 +87,6 @@ PoollingLayer *ConvertionLayer::castToPoollingLayer(){
     // p_layer->setWidth = this->getWidth();
     // p_layer->setHeight = this->getHeight();
     // p_layer->setbatchSize = this->getbatchSize();
-
+    return p_layer;
 }
 

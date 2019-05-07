@@ -75,8 +75,8 @@ void CNN::polling(){
 	PoollingLayer *p_layer = this->convertionLayers.at(this->sizeOfConvertionLayer-1)->getAfterConvertionLayer()->castToPoollingLayer();
 	for(int layerNum = 0; layerNum<sizeOfPoollingLayer; layerNum++){
 		this->poollingLayers.push_back(p_layer);
-		//p_layer->convolution(1,this->wHeightWidthPairs.at(layerNum),KernelGenerateMode::MAX_POOLLING);
-        //p_layer = p_layer->getAfterPoollingLayer();
+		p_layer->convolution(1,this->wHeightWidthPairs.at(layerNum),KernelGenerateMode::MAX_POOLLING);
+        p_layer = p_layer->getAfterPoollingLayer();
 	}
 	
 }
