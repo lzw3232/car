@@ -79,7 +79,7 @@ void ConvertionLayer::convolution(bool isFirstEpouch,Vector *v, KernelGenerateMo
         for(int row=0;row<this->getHeight()-this->getw()->getHeight()+1; row++){
             mtrix[row]=new double[this->getWidth()-(int)(2*floor(this->getw()->getWidth()/2))];
             for(int col=0; col<this->getWidth()-this->getw()->getWidth()+1;col++){
-                int sum=0;
+                double sum=0;
                 for(int i=0; i<this->getw()->getHeight();i++){
                     for(int j=0;j<this->getw()->getWidth();j++){
                         sum+=this->getvalues().at(size)[row+i][col+j]*this->getw()->getW()[i][j]+this->getb();

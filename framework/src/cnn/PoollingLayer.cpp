@@ -39,8 +39,10 @@ void PoollingLayer::convolution(bool isFirstEpouch,Vector *v, KernelGenerateMode
         }
         values.push_back(mtrix);
     }
-    int w=this->getHeight()/2;
-    int h=this->getWidth()/2;
+    int w=this->getWidth()/2;
+    int h=this->getHeight()/2;
+
+
     if(isFirstEpouch){
         this->afterPoollingLayer = new PoollingLayer(w,h,this->getbatchSize(),values);
     }else{
@@ -52,6 +54,15 @@ void PoollingLayer::convolution(bool isFirstEpouch,Vector *v, KernelGenerateMode
 
 void PoollingLayer::print(){
     std::cout<<this->getWidth()<<" "<<this->getHeight()<<std::endl;
+
+    // for(int size=0;size<this->getbatchSize();size++){
+    //     for(int row=0;row<this->getHeight(); row++){
+    //         for(int col=0; col<this->getWidth();col++){
+    //             std::cout<<this->getvalues().at(size)[row][col]<<" ";
+    //         }
+    //     }
+    //     std::cout<<std::endl;
+    // }
 }
 
 

@@ -73,35 +73,48 @@ void CNN::firstEpoch(){
 		t_layer->convolution(1,this->wHeightWidthPairs.at(layerNum),this->kernelMode);
         t_layer = t_layer->getAfterConvertionLayer();
 	}
-	polling(1);
-	fullConnect(1);
+
+	PoollingLayer *p_layer = this->convertionLayers.at(this->sizeOfConvertionLayer-1)->getAfterConvertionLayer()->castToPoollingLayer();
+	for(int layerNum = 0; layerNum<sizeOfPoollingLayer; layerNum++){
+		this->poollingLayers.push_back(p_layer);
+		p_layer->convolution(1,this->wHeightWidthPairs.at(layerNum),KernelGenerateMode::MAX_POOLLING);
+        p_layer = p_layer->getAfterPoollingLayer();
+	}
+
+	FullyConnectedLayer *f_layer = this->poollingLayers.at(this->sizeOfPoollingLayer-1)->getAfterPoollingLayer()->castToFullyConnectedLayer();
+	this->fullyConnectedLayers.push_back(f_layer);
+	f_layer->convolution(1,this->wHeightWidthPairs.at(0),KernelGenerateMode::MAX_POOLLING);
 }
 
 void CNN::epoch(){
-	ConvertionLayer *t_layer = this->layer;
-	for(int layerNum = 0; layerNum<sizeOfConvertionLayer; layerNum++){
-		t_layer->convolution(0,this->wHeightWidthPairs.at(layerNum),this->kernelMode);
-        t_layer = t_layer->getAfterConvertionLayer();
-	}
-	polling(0);
-	fullConnect(0);
+	convertion();
+	polling();
+	fullConnect();
 }
 
 void CNN::forward(){
 	
 }
 
-void CNN::polling(bool isFirst){
-	PoollingLayer *p_layer = this->convertionLayers.at(this->sizeOfConvertionLayer-1)->getAfterConvertionLayer()->castToPoollingLayer();
+void CNN::convertion(){
+	ConvertionLayer *t_layer = this->layer;
+	for(int layerNum = 0; layerNum<sizeOfConvertionLayer; layerNum++){
+		t_layer->convolution(0,this->wHeightWidthPairs.at(layerNum),this->kernelMode);
+        t_layer = t_layer->getAfterConvertionLayer();
+	}
+}
+
+void CNN::polling(){
+	PoollingLayer *p_layer = this->poollingLayers.at(this->sizeOfPoollingLayer-1);
+	std::cout<<p_layer->getAfterPoollingLayer()->getWidth()<<std::endl;
 	for(int layerNum = 0; layerNum<sizeOfPoollingLayer; layerNum++){
-		this->poollingLayers.push_back(p_layer);
-		p_layer->convolution(isFirst,this->wHeightWidthPairs.at(layerNum),KernelGenerateMode::MAX_POOLLING);
+		p_layer->convolution(0,this->wHeightWidthPairs.at(layerNum),KernelGenerateMode::MAX_POOLLING);
         p_layer = p_layer->getAfterPoollingLayer();
 	}
 	
 }
 
-void CNN::fullConnect(bool isFirst){
-	FullyConnectedLayer *p_layer = this->poollingLayers.at(this->sizeOfPoollingLayer-1)->getAfterPoollingLayer()->castToFullyConnectedLayer();
-	p_layer->convolution(isFirst,this->wHeightWidthPairs.at(0),KernelGenerateMode::MAX_POOLLING);
+void CNN::fullConnect(){
+	FullyConnectedLayer *p_layer = this->fullyConnectedLayers.at(0);
+	p_layer->convolution(0,this->wHeightWidthPairs.at(0),KernelGenerateMode::MAX_POOLLING);
 }

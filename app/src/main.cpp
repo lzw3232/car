@@ -86,7 +86,7 @@ int main(int argc,char *argv[]){
     cnn->train();
     
 
-    lzw::WindowManager *manager=lzw::WindowManager::GetWindowManagerInstance();
+    //lzw::WindowManager *manager=lzw::WindowManager::GetWindowManagerInstance();
 
 
 
@@ -101,11 +101,11 @@ int main(int argc,char *argv[]){
     // //manager->createWindow(GrayWindow);
     // manager->createWindow(BinaryWindow);
     //  manager->createWindow(denoiseWindow);
-    for(int i = 0;i<cut->getArray().size();i++){ 
-        manager->createWindow(windows.at(i));
-    }
+    // for(int i = 0;i<cut->getArray().size();i++){ 
+    //     manager->createWindow(windows.at(i));
+    // }
 
-    manager->renderWindow();
+    // manager->renderWindow();
     
     return 0;
 

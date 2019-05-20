@@ -36,8 +36,9 @@ namespace lzw{
 				void init();
 
 				void forward();
-				void polling(bool isFirst);
-				void fullConnect(bool isFirst);
+				void convertion();
+				void polling();
+				void fullConnect();
 
 
 
