@@ -3,6 +3,19 @@
 
 #include "../../include/io/ImageLoader.h"
 #include<iostream>
+// #define JCONFIG_INCLUDED
+// #define JPEG_LIB_VERSION 80
+// #define LIBJPEG_TURBO_VERSION 1.4.2
+// #define C_ARITH_CODING_SUPPORTED 1
+// #define D_ARITH_CODING_SUPPORTED 1
+// #define BITS_IN_JSAMPLE  8  
+// #define HAVE_UNSIGNED_CHAR 1
+// #define HAVE_UNSIGNED_SHORT 1
+// #define NEED_SYS_TYPES_H 1
+// #define WITH_SIMD 1
+// #ifndef __CHAR_UNSIGNED__
+// #endif
+// #define SIZEOF_SIZE_T 8
 
 extern "C"{
     #include "jpeglib.h"

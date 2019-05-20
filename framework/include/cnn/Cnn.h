@@ -7,6 +7,7 @@
 #include "../../include/cnn/PoollingLayer.h"
 #include "../../include/cnn/FullyConnectedLayer.h"
 #include "../../include/cnn/math/Vector.h"
+#include "../../include/cnn/common/Activation.h"
 
 
 namespace lzw{
@@ -35,20 +36,23 @@ namespace lzw{
 				void init();
 
 				void forward();
-				void polling();
-				void fullConnect();
+				void polling(bool isFirst);
+				void fullConnect(bool isFirst);
 
 
 
 				void firstEpoch();
 				void epoch();
 
+				ActivationFunctionType activationFunctionType;
+				void (*customizeActivationFuntion)(int width,int height, double **values);
 
 			public:
 
 				CNN();
 
-				void input(ConvertionLayer *layer, int sizeOfConvertionLayer,int sizeOfPoollingLayer, int batchSize, int epochNum, KernelGenerateMode kernelMode, std::vector<Vector *> wHeightWidthPairs);
+				void input(ConvertionLayer *layer, int sizeOfConvertionLayer,int sizeOfPoollingLayer, int batchSize, int epochNum, KernelGenerateMode kernelMode, std::vector<Vector *> wHeightWidthPairs,ActivationFunctionType activationFunctionType);
+				void input(ConvertionLayer *layer, int sizeOfConvertionLayer,int sizeOfPoollingLayer, int batchSize, int epochNum, KernelGenerateMode kernelMode, std::vector<Vector *> wHeightWidthPairs,ActivationFunctionType activationFunctionType,void (*CustomizeActivationFuntion)(int width,int height, double **values));
 
 				void train();
 

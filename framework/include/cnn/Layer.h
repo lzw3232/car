@@ -4,6 +4,7 @@
 #include "../../include/cnn/ConvertionKernel.h"
 #include "../../include/cnn/math/Vector.h"
 #include "../../include/image/PixelMtrix.h"
+#include "../../include/cnn/common/SigMoidActivation.h"
 
 #include <vector>
 
@@ -13,12 +14,19 @@ namespace lzw{
 		private:
 			int width;
 			int height;
-
+			
 			int batchSize;
 			
 			std::vector<double **> values; // batch
 
 			ConvertionKernel *w;
+
+			double b;
+
+			ActivationFunctionType activationFunctionType;
+			Activation *activation;
+			void (*CustomizeActivationFuntion)(int width,int height, double **values);
+
 		public:
             Layer();
 			Layer(int width, int height, int batchSize, std::vector<double **> values);
@@ -36,9 +44,20 @@ namespace lzw{
             int getWidth(){return this->width;};
             int getHeight(){return this->height;};
             int getbatchSize(){return this->batchSize;};
+            void setvalues(std::vector<double **> values){this->values=values;};
             std::vector<double **> getvalues(){return this->values;};
             void setw(ConvertionKernel *w){this->w=w;};
             ConvertionKernel *getw(){return this->w;};
+
+			void setActivationFunctionType(ActivationFunctionType activationFunctionType){this->activationFunctionType=activationFunctionType;};
+			ActivationFunctionType getActivationFunctionType(){return this->activationFunctionType;};
+
+			void setActivationFunction(Activation *activation){this->activation=activation;};
+			Activation *getActivationFunction(){return this->activation;};
+
+			void setb(double b){this->b=b;};
+			double getb(){return this->b;};
+
 
 			~Layer();
 	};

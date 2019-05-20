@@ -2,6 +2,7 @@
 #define __FRAMEWORK_CNN_POOLLING_LAYER_H__
 
 #include "../../include/cnn/Layer.h"
+#include "../../include/cnn/FullyConnectedLayer.h"
 
 namespace lzw{
 	namespace cnn{
@@ -17,6 +18,7 @@ namespace lzw{
 
 				void convolution(bool isFirstEpouch,Vector *v, KernelGenerateMode kernelMode);
 				PoollingLayer *getAfterPoollingLayer(){return this->afterPoollingLayer;};
+				FullyConnectedLayer *castToFullyConnectedLayer();
 				void print();
 		};
 	};

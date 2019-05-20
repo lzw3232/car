@@ -10,19 +10,41 @@ void PixelMtrixtoDouble(){
    
 }
 
-ConvertionLayer::ConvertionLayer(int width, int height, int batchSize, std::vector<double **> values, ConvertionKernel *w):Layer(width,height,batchSize,values,w)
-{
+void ConvertionLayer::set(ActivationFunctionType activationFunctionType){
+    this->setActivationFunctionType(activationFunctionType);
+
+        // 激活函数
+        switch (this->getActivationFunctionType())
+        {
+        case ACTIVATION_FUNCTION_CUSTOMIZE:
+            /* code */
+            break;
+        
+        case ACTIVATION_FUNCTION_SIGMOID:
+            this->setActivationFunction(new SigMoidActivation());
+            break;
+        default:
+            break;
+        }
+
+    this->setb(10.5);
 }
 
-ConvertionLayer::ConvertionLayer(int width, int height, int batchSize, std::vector<PixelMtrix *> values, ConvertionKernel *w):Layer(width,height,batchSize,values,w)
+ConvertionLayer::ConvertionLayer(int width, int height, int batchSize, std::vector<double **> values, ConvertionKernel *w,ActivationFunctionType activationFunctionType):Layer(width,height,batchSize,values,w)
 {
+    this->set(activationFunctionType);
+}
+
+ConvertionLayer::ConvertionLayer(int width, int height, int batchSize, std::vector<PixelMtrix *> values, ConvertionKernel *w,ActivationFunctionType activationFunctionType):Layer(width,height,batchSize,values,w)
+{
+    this->set(activationFunctionType);
 }
 
 ConvertionLayer::~ConvertionLayer()
 {
 }
 
-ConvertionKernel *generateConvertionKernel(Vector *v, KernelGenerateMode kernelMode){
+ConvertionKernel *ConvertionLayer::generateConvertionKernel(Vector *v, KernelGenerateMode kernelMode){
     ConvertionKernel *kernel = new ConvertionKernel(v->getX(),v->getY());
     switch (kernelMode)
     {
@@ -49,7 +71,7 @@ ConvertionKernel *generateConvertionKernel(Vector *v, KernelGenerateMode kernelM
 
 void ConvertionLayer::convolution(bool isFirstEpouch,Vector *v, KernelGenerateMode kernelMode){
     if(isFirstEpouch){
-        this->setw(generateConvertionKernel(v,kernelMode));
+        this->setw(this->generateConvertionKernel(v,kernelMode));
     }
     std::vector<double **> values;
     for(int size=0;size<this->getbatchSize();size++){
@@ -60,17 +82,26 @@ void ConvertionLayer::convolution(bool isFirstEpouch,Vector *v, KernelGenerateMo
                 int sum=0;
                 for(int i=0; i<this->getw()->getHeight();i++){
                     for(int j=0;j<this->getw()->getWidth();j++){
-                        sum+=this->getvalues().at(size)[row+i][col+j]*this->getw()->getW()[i][j];
+                        sum+=this->getvalues().at(size)[row+i][col+j]*this->getw()->getW()[i][j]+this->getb();
                     }
                 }
                 mtrix[row][col]=sum;
             }
         }
+        this->getActivationFunction()->doActive(this->getWidth()-(int)(2*floor(this->getw()->getWidth()/2)),
+                                    this->getHeight()-(int)(2*floor(this->getw()->getHeight()/2)),
+                                    mtrix);
         values.push_back(mtrix);
     }
+
+    
     int w=this->getHeight()-(int)(2*floor(this->getw()->getHeight()/2));
     int h=this->getWidth()-(int)(2*floor(this->getw()->getWidth()/2));
-    this->afterConvertionLayer = new ConvertionLayer(w,h,this->getbatchSize(),values,this->getw());
+    if(isFirstEpouch){
+        this->afterConvertionLayer = new ConvertionLayer(w,h,this->getbatchSize(),values,this->getw(),this->getActivationFunctionType());
+    }else{
+        this->afterConvertionLayer->setvalues(values);
+    }
     this->afterConvertionLayer->print();
 }
 

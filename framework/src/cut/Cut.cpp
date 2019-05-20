@@ -21,7 +21,7 @@ std::vector<Rect*> Cut::doCut(){
     for(int cols=0; cols<width;cols++){
         int sum=0;
         for(int rows=0; rows<height;rows++){
-            if(this->getPixelMtrix()->getPixel()[rows][cols].getColor()->getR() == 0xff){
+            if(this->getPixelMtrix()->getPixel()[rows][cols].getColor()->getR() == 0x0){
                 sum++;
             }
         }
@@ -52,10 +52,10 @@ std::vector<Rect*> Cut::doCut(){
                     break;
                 }
             }
-            //if(zero_sum>2){
+            if(zero_sum>2){
                 cut_point.push_back((zero_sum+cols+cols)/2);
                 cols=zero_sum+cols;
-            //}
+            }
         }
     }
 
