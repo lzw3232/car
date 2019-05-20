@@ -1,6 +1,6 @@
-.vscode/
-app/build/
-app/obj/
-jpeglib/
-jpeglib2/
+.vscode/*
+app/build/*
+app/obj/*
+jpeglib/*
+jpeglib2/*
 /a
